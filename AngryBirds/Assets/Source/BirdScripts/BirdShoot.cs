@@ -1,58 +1,66 @@
-using BirdScripts;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BirdShoot : MonoBehaviour
+namespace BirdScripts
 {
-    public Rigidbody2D _slingRb;
+    public class BirdShoot : MonoBehaviour
+    {
+        public Rigidbody2D _slingRb;
 
-    [SerializeField] private BirdSpawn _birdSpawn;
-    [SerializeField] private int _maxDistanceToPool = 3;
-    private Rigidbody2D _rb;
-    private bool _isPressed = false;
- 
-    private void Start()
-    {
-        _rb = gameObject.GetComponent<Rigidbody2D>();
-    }
-    void Update()
-    {
-        if (_isPressed)
+        [SerializeField] private BirdSpawn _birdSpawn;
+        [SerializeField] private DrawSling _drawSling;
+
+        [SerializeField] private int _maxDistanceToPool = 3;
+        private Rigidbody2D _rb;
+        private bool _isPressed = false;
+
+        private void Start()
         {
-            Vector2 _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (Vector2.Distance(_mousePosition, _slingRb.position) > _maxDistanceToPool)
+            _rb = gameObject.GetComponent<Rigidbody2D>();
+        }
+        void Update()
+        {
+            if (_isPressed)
             {
-                _rb.position = _slingRb.position + (_mousePosition - _slingRb.position).normalized * _maxDistanceToPool;
-            } else
-            {
-                _rb.position = _mousePosition;
+                
+                Vector2 _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                _drawSling.Draw(_rb.position);
+                if (Vector2.Distance(_mousePosition, _slingRb.position) > _maxDistanceToPool)
+                {
+                    _rb.position = _slingRb.position + (_mousePosition - _slingRb.position).normalized * _maxDistanceToPool;
+                }
+                else
+                {
+                    _rb.position = _mousePosition;
+                }
             }
         }
-    }
 
-    public void BirdPressed(bool isPressed)
-    {
-        _isPressed = isPressed;
-        _rb.isKinematic = isPressed;
-    }
+        public void BirdPressed(bool isPressed)
+        {
+            _isPressed = isPressed;
+            _rb.isKinematic = isPressed;
+        }
 
-    public void BirdUnleashed(bool isPressed)
-    {
-        _isPressed = isPressed;
-        _rb.isKinematic = isPressed;
-        StartCoroutine(Shoot());
-    }
+        public void BirdUnleashed(bool isPressed)
+        {
+            _isPressed = isPressed;
+            _rb.isKinematic = isPressed;
+            _drawSling.DrawStartSling();
+            StartCoroutine(Shoot());
+        }
 
-    IEnumerator Shoot()
-    {
-        yield return new WaitForSeconds(0.1f);
+        IEnumerator Shoot()
+        {
+            yield return new WaitForSeconds(0.1f);
 
-        gameObject.GetComponent<SpringJoint2D>().enabled = false;
-        this.enabled = false;
+            gameObject.GetComponent<SpringJoint2D>().enabled = false;
+            this.enabled = false;
 
-        yield return new WaitForSeconds(1);
-        _birdSpawn.BirdRespawn();
+            yield return new WaitForSeconds(1);
+            _birdSpawn.BirdRespawn();
+        }
     }
 }
