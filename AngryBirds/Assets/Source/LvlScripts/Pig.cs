@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Pig : MonoBehaviour
 {
+    [SerializeField] private AudioManager _audioManager;
     [SerializeField] private float _hp = 3;
     [SerializeField] private int _pointsCost;
     [SerializeField] WinLoose _winLoose;
     [SerializeField] Score _score;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
@@ -15,6 +17,7 @@ public class Pig : MonoBehaviour
         {
             _score.AddPoints(_pointsCost);
             _winLoose.CountDeath();
+            _audioManager.Play("PigDie");
             Destroy(gameObject);
         }
         else

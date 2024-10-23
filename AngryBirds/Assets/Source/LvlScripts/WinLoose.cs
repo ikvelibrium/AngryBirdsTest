@@ -1,12 +1,16 @@
+using BirdScripts;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class WinLoose : MonoBehaviour
 {
-    [SerializeField] List<GameObject> _pigs = new List<GameObject>();
+    [SerializeField] private GameObject _winScreen;
+    [SerializeField] private GameObject _looseScreen;
+    [SerializeField] private List<GameObject> _pigs = new List<GameObject>();
     [SerializeField] private float _timeBeforeCheck;
-
+    [SerializeField] BirdSpawn _birdSpawn;
     private int _pigsDead = 0;
     public void Chek()
     {
@@ -15,28 +19,32 @@ public class WinLoose : MonoBehaviour
     public void CountDeath()
     {
         _pigsDead++;
-
+        if(_pigsDead >= _pigs.Count)
+        {
+            Win();
+        }
     }
     private IEnumerator CheckAfterTime()
     {
         yield return new WaitForSeconds(_timeBeforeCheck);
-        if (_pigs.Count >= _pigsDead )
+        if (_pigsDead >= _pigs.Count)
         {
-            Debug.Log(_pigs.Count);
+           
             Win();
         } else
         {
-            Debug.Log(_pigs.Count);
+           
             Loose();
         }
     }
 
     private void Win()
     {
-        Debug.Log("a");
+        _birdSpawn.CountBirdsLeft();
+        _winScreen.SetActive(true);
     }
     private void Loose()
     {
-        Debug.Log("b");
+        _looseScreen.SetActive(true);
     }
 }

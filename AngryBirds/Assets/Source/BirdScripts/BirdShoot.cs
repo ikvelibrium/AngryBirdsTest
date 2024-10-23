@@ -11,6 +11,7 @@ namespace BirdScripts
 
         [SerializeField] private BirdSpawn _birdSpawn;
         [SerializeField] private DrawSling _drawSling;
+        [SerializeField] private AudioManager _audioManager;
 
         [SerializeField] private int _maxDistanceToPool = 3;
         private Rigidbody2D _rb;
@@ -48,6 +49,7 @@ namespace BirdScripts
         {
             _isPressed = isPressed;
             _rb.isKinematic = isPressed;
+            _audioManager.Play("BirdFly");
             _drawSling.DrawStartSling();
             StartCoroutine(Shoot());
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DistructObject : MonoBehaviour
 {
-    
+    [SerializeField] private AudioManager _audioManager;
     [SerializeField] private float _hp = 3;
     [SerializeField] private int _pointsCost;
     [SerializeField] Score _score;
@@ -13,6 +13,7 @@ public class DistructObject : MonoBehaviour
        
         if (collision.relativeVelocity.magnitude > _hp)
         {
+            _audioManager.Play("WoodDestroy");
             _score.AddPoints(_pointsCost);
             Destroy(gameObject);
         }

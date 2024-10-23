@@ -1,13 +1,21 @@
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class SceneLoader
+public class SceneLoader : MonoBehaviour
 {
-    public static void LoadFirstLvl()
+    public void loadMenu()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
-    public static void LoadSecondLvl()
+    public void LoadFirstLvl()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(1);
+    }
+    public void LoadSecondLvl()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(2);
     }
 }
