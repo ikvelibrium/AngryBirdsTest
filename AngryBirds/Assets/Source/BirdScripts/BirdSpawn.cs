@@ -11,6 +11,7 @@ namespace BirdScripts
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private List<GameObject> _birdsPref = new List<GameObject>();
         private int _counter = 0;
+
       
         public void CountBirdsLeft()
         {
@@ -18,12 +19,14 @@ namespace BirdScripts
         }
         public void BirdRespawn()
         {
-            _birdsPref[_counter].gameObject.transform.position = _spawnPoint.position;
-            _counter++;
-            if (_counter == _birdsPref.Count)
+            if (_counter >= _birdsPref.Count)
             {
+                Debug.Log("sdsd");
                 _winLoose.Chek();
             }
+            _birdsPref[_counter].gameObject.transform.position = _spawnPoint.position;
+            _counter++;
+            
         }
     }
 }

@@ -15,7 +15,7 @@ public class AudioManager : MonoBehaviour
 
         
 
-        DontDestroyOnLoad(gameObject);
+        
 
         foreach (SoundSO s in sounds)
         {
@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour
             s.sourse.loop = s.loop;
             s.sourse.outputAudioMixerGroup = s.group;
         }
-       
+        Play("MainTheme");
     }
     public void Play(string name)
     {
