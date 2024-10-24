@@ -1,28 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Core;
 
-public class Pig : MonoBehaviour
+namespace Level
 {
-    [SerializeField] private AudioManager _audioManager;
-    [SerializeField] private float _hp = 3;
-    [SerializeField] private int _pointsCost;
-    [SerializeField] WinLoose _winLoose;
-    [SerializeField] Score _score;
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    public class Pig : MonoBehaviour
     {
+        [SerializeField] private AudioManager _audioManager;
+        [SerializeField] private float _hp = 3;
+        [SerializeField] private int _pointsCost;
+        [SerializeField] WinLoose _winLoose;
+        [SerializeField] Score _score;
 
-        if (collision.relativeVelocity.magnitude > _hp)
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            _score.AddPoints(_pointsCost);
-            _winLoose.CountDeath();
-            _audioManager.Play("PigDie");
-            Destroy(gameObject);
-        }
-        else
-        {
-            _hp -= collision.relativeVelocity.magnitude;
+
+            if (collision.relativeVelocity.magnitude > _hp)
+            {
+                _score.AddPoints(_pointsCost);
+                _winLoose.CountDeath();
+                _audioManager.Play("PigDie");
+                Destroy(gameObject);
+            }
+            else
+            {
+                _hp -= collision.relativeVelocity.magnitude;
+            }
         }
     }
 }

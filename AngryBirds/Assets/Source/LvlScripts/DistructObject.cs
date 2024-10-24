@@ -1,25 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Core;
 
-public class DistructObject : MonoBehaviour
+namespace Level
 {
-    [SerializeField] private AudioManager _audioManager;
-    [SerializeField] private float _hp = 3;
-    [SerializeField] private int _pointsCost;
-    [SerializeField] Score _score;
-    private void OnCollisionEnter2D(Collision2D collision)
+
+
+    public class DistructObject : MonoBehaviour
     {
-       
-        if (collision.relativeVelocity.magnitude > _hp)
+        [SerializeField] private AudioManager _audioManager;
+        [SerializeField] private float _hp = 3;
+        [SerializeField] private int _pointsCost;
+        [SerializeField] Score _score;
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            _audioManager.Play("WoodDestroy");
-            _score.AddPoints(_pointsCost);
-            Destroy(gameObject);
-        }
-        else
-        {
-            _hp -= collision.relativeVelocity.magnitude;
+
+            if (collision.relativeVelocity.magnitude > _hp)
+            {
+                _audioManager.Play("WoodDestroy");
+                _score.AddPoints(_pointsCost);
+                Destroy(gameObject);
+            }
+            else
+            {
+                _hp -= collision.relativeVelocity.magnitude;
+            }
         }
     }
 }

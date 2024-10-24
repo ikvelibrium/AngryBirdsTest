@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Level;
+using Core;
 namespace BirdScripts
 {
     public class BirdSpawn : MonoBehaviour
@@ -21,7 +22,6 @@ namespace BirdScripts
         {
             if (_counter >= _birdsPref.Count)
             {
-                Debug.Log("sdsd");
                 _winLoose.Chek();
             }
             _birdsPref[_counter].gameObject.transform.position = _spawnPoint.position;

@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseScript : MonoBehaviour
+namespace Core
 {
-    public void PauseGame()
+    public class PauseScript : MonoBehaviour
     {
-        Time.timeScale = 0;
-    }
-    public void ResumeGame()
-    {
-        Time.timeScale = 1;
+        public void PauseGame()
+        {
+            Time.timeScale = 0;
+        }
+        public void ResumeGame()
+        {
+            Time.timeScale = 1;
+        }
     }
 }

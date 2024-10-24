@@ -4,40 +4,46 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+namespace Core
 {
-    public SoundSO[] sounds;
 
-   
 
-    void Awake()
+    public class AudioManager : MonoBehaviour
     {
+        public SoundSO[] sounds;
 
-        
 
-        
 
-        foreach (SoundSO s in sounds)
+        void Awake()
         {
-            s.sourse = gameObject.AddComponent<AudioSource>();
-            s.sourse.clip = s.clip;
 
-            s.sourse.volume = s.volume;
-            s.sourse.pitch = s.pitch;
-            s.sourse.loop = s.loop;
-            s.sourse.outputAudioMixerGroup = s.group;
+
+
+
+
+            foreach (SoundSO s in sounds)
+            {
+                s.sourse = gameObject.AddComponent<AudioSource>();
+                s.sourse.clip = s.clip;
+
+                s.sourse.volume = s.volume;
+                s.sourse.pitch = s.pitch;
+                s.sourse.loop = s.loop;
+                s.sourse.outputAudioMixerGroup = s.group;
+            }
+            Play("MainTheme");
         }
-        Play("MainTheme");
-    }
-    public void Play(string name)
-    {
-
-        SoundSO s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
+        public void Play(string name)
         {
-            Debug.LogWarning("Sound: " + name + " not found!");
-            return;
+
+            SoundSO s = Array.Find(sounds, sound => sound.name == name);
+            if (s == null)
+            {
+                Debug.LogWarning("Sound: " + name + " not found!");
+                return;
+            }
+            s.sourse.Play();
         }
-        s.sourse.Play();
     }
 }
+
